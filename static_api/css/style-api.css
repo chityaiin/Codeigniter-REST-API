@@ -1,0 +1,84 @@
+label.error {
+    color: #F44336;
+}
+
+b.icon-line {
+    background-image: url(http://www.perdto.com/assets/images/css/sicon-set.png);
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-position: -390px 0;
+}
+
+body{
+    background-color: #eee;
+}
+
+.list-process li.list-group-item {
+    color: #ccc;
+}
+
+.list-process li.list-group-item.item-success {
+    color: #178e1c;
+}
+
+
+.list-process li.list-group-item.item-process {
+    color: #2196F3;
+}
+
+.list-process li.list-group-item.item-error {
+    color: #F44336;
+}
+
+
+.list-process li.list-group-item .badge{
+    background-color: #ccc;
+    display: none;
+}
+
+.list-process li.list-group-item.item-success .badge{
+    background-color: #178e1c;
+    display: block;
+}
+
+
+.list-process li.list-group-item.item-process .badge{
+    background-color: #2196F3;
+    display: block;
+}
+
+.list-process li.list-group-item.item-error .badge{
+        background-color: #F44336;
+        display: block;
+}
+
+footer {
+    background: #000;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+footer {
+    padding-top: 45px;
+    padding-bottom: 35px;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+    display: block;
+}
+footer {
+    color: #fff;
+    font-size: 11px;
+    text-align: left;
+}
+user agent stylesheet
+article, aside, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+h4 {
+    font-size: 19px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #aaa;
+    letter-spacing: 1px;
+}
