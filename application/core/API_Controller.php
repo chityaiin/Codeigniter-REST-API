@@ -16,12 +16,8 @@ class API_Controller extends CI_Controller {
         parent::__construct();
 
         $this->_method = $_SERVER['REQUEST_METHOD'];
-
-
-
         if(count($this->input->post())>0){
               $this->_data = $this->input->post();
-              echo 555;
         }else
         {
            // If no file type is provided, then there are probably just arguments
@@ -92,17 +88,31 @@ class API_Controller extends CI_Controller {
         return (array_key_exists($key, $this->_data) ? $this->_data[$key] : NULL);
     }
 
-    protected function respont($data){
+    protected function respont($data,$model=null){
 
+        $view = $this->input->get('format');
+        $method = 'get';
+        if(empty($view) && empty($_SERVER['CONTENT_TYPE']) || $_SERVER['CONTENT_TYPE'] == 'application/x-www-form-urlencoded'){
+          $view = 'html';
+        }else if(empty($view)){
+          $view = 'json';
+        }
 
+        if(!empty($_SERVER['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] == 'application/x-www-form-urlencoded'){
+          $method = 'post';
+        }
 
-        if(empty($_SERVER['CONTENT_TYPE'])){
-          $this->load->view('api/view_api',array(
-            'data'=> $data
-          ));
-        }else{
-          header('Content-Type: '.$this->_content_type);
+        if($view=='json'){
+          header('Content-Type: application/json');
           echo json_encode($data);
+        }else if($view=='xml'){
+          header('Content-Type: application/xml');
+        }else{
+          $this->load->view('api/view_api',array(
+            'data'=> $data,
+            'method' => $method,
+            'model' => $model
+          ));
         }
 
         //exit();

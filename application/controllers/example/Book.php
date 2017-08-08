@@ -19,7 +19,7 @@ class Book extends API_Controller {
 			$data = $this->books->get($id);
 
 			if($data)
-			$this->respont($data);
+				$this->respont($data,$this->books);
 
 			else {
 				$this->respont(array(

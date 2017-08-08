@@ -64,16 +64,19 @@ function indent($json) {
     <title>API</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?=config_item('site_url')?>static_api/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?=config_item('site_url')?>static_api/js/codemirror.css" rel="stylesheet">
+    <link href="<?=base_url()?>static_api/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?=base_url()?>static_api/js/codemirror.css" rel="stylesheet">
+    <link href="<?=base_url()?>static_api/css/style-api.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="<?=config_item('site_url')?>static_api/js/codemirror.js"></script>
-    <script src="<?=config_item('site_url')?>static_api/js/beautify.js"></script>
+    <script src="<?=base_url()?>static_api/js/jquery.min.js"></script>
+    <script src="<?=base_url()?>static_api/js/codemirror.js"></script>
+    <script src="<?=base_url()?>static_api/js/beautify.js"></script>
+    <script src="<?=base_url()?>static_api/js/bootstrap.min.js"></script>
     <style>
     .CodeMirror {
       border: 1px solid #eee;
@@ -116,30 +119,68 @@ function indent($json) {
     </div>
 
     <div class="container">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <form>
+      <form id=formSumit>
+        <div class="panel panel-default">
+          <div class="panel-heading">API</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <input type="hidden" id="method" value="get">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="title-method">GET</span> <span class="caret"></span></button>
+                    <ul class="dropdown-menu" id="menu-method">
+                      <li><a href="" value="get">GET</a></li>
+                      <li><a href="" value="post">POST</a></li>
+                      <!-- <li><a href="" value="put">PUT</a></li>
+                      <li><a href="" value="delete">DELETE</a></li> -->
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" class="form-control" aria-label="..." id="url" value="<?="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"?>">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-primary" id="submit">Send</button>
+                  </div>
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
 
-            <?php
-              $end = end($data);
-              if(is_object($end)){
-                foreach ($end as $key => $value) {
-
-
-            ?>
-            <div class="form-group">
-              <label for="<?=$key?>"><?=$key?></label>
-              <input type="email" class="form-control" id="<?=$key?>" name="<?=$key?>" placeholder="<?=$key?>">
-            </div>
-            <?php
-          }
-        }
-             ?>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
+            </div><!-- /.row -->
+          </div>
         </div>
-      </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <p>HTTP 200 OK</p>
+            <p>Allow: GET, POST, HEAD, OPTIONS</p>
+            <p>Content-Type: application/json</p>
+
+          </div>
+        </div>
+
+        <div class="panel panel-default hidden" id="form" >
+          <div class="panel-body">
+
+
+                <?php
+                  if(!empty($model))
+                    foreach ($model as $key => $value) {
+
+                ?>
+                <div class="form-group">
+                  <label for="<?=$key?>"><?=$key?></label>
+                  <input type="text" class="form-control" disabled="disabled" id="<?=$key?>" name="<?=$key?>" placeholder="<?=$key?>">
+                </div>
+                <?php
+              }
+                 ?>
+
+          </div>
+        </div>
+      </form>
     </div>
+
+
+
+
 
     <div class="container">
       <div class="panel panel-default">
@@ -158,6 +199,37 @@ function indent($json) {
       autoCloseBrackets: true,
       mode: "application/json",
       lineWrapping: true
+  });
+
+  $(document).ready(function(){
+
+      $('#menu-method a').click(function(event){
+          var v = $(this).attr('value');
+          $('#title-method').text($(this).text());
+          $('#formSumit').attr('method',v);
+          if(v=='post' || v=='put'){
+            $('#form').removeClass('hidden');
+            $('#form input').val('');
+            $('#form input').attr('disabled',false);
+          }else {
+            $('#form').addClass('hidden');
+          }
+
+          $('#form')
+          event.preventDefault()
+      });
+
+      $('#url').keyup(function(){
+        $('#formSumit').attr('action',$(this).val());
+      });
+
+      // $('#formSumit').sumit(function(){
+      //
+      //
+      //   return v=='delete';
+      // });
+
+
   });
 
 </script>

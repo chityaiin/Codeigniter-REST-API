@@ -82,3 +82,9 @@ h4 {
     color: #aaa;
     letter-spacing: 1px;
 }
+
+.container .CodeMirror-scroll {
+    font-size: 12px;
+    font-family: monospace;
+    color: #e01f1f;
+}
